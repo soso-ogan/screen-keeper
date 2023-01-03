@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+
+import { toast } from "react-toastify";
 
 
 const Login = ({ setAuth }) => {
@@ -8,7 +10,7 @@ const Login = ({ setAuth }) => {
     password: "",
   });
 
-  const {email, password} = inputs
+  const { email, password } = inputs;
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -17,21 +19,26 @@ const Login = ({ setAuth }) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const body = {email, password}
+      const body = { email, password };
 
       const response = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
       });
 
-      const parseRes = await response.json()
+      const parseRes = await response.json();
 
-        localStorage.setItem("token", parseRes.token)
-        setAuth(true)
+      if (parseRes.token) {
+        localStorage.setItem("token", parseRes.token);
 
-
-
+        setAuth(true);
+        toast.success("logged in succesfully!");
+        
+      } else {
+        setAuth(false);
+        toast.error(parseRes);
+      }
 
     } catch (err) {
       console.error(err.message);
@@ -61,7 +68,7 @@ const Login = ({ setAuth }) => {
         />
         <button className="btn btn-success btn-block my-4">Submit</button>
       </form>
-    <Link to = "/register">Register</Link>
+      <Link to="/register">Register</Link>
     </Fragment>
   );
 };

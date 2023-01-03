@@ -1,7 +1,8 @@
 import "./App.css";
 import React, { Fragment, useState, useEffect } from "react";
 
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   BrowserRouter as Router,
@@ -13,6 +14,7 @@ import {
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
+
 
 
 function App() {
@@ -79,6 +81,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      <ToastContainer  />;
     </Fragment>
   );
 }
