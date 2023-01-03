@@ -37,3 +37,4 @@ const Dashboard = ({ setAuth }) => {
   );
 };
 export default Dashboard;
+//dashboard component
